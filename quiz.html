@@ -279,6 +279,29 @@
       50% {transform: translate(-50%, -50%) scale(1.05)}
       100% {transform: translate(-50%, -50%) scale(0.95)}
     }
+    /* Ajuste geral para imagens e elementos SVG */
+img, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Garante que o foguete não desapareça por overflow */
+.rocket {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Se o foguete for posicionado absoluto, adaptar para celular */
+@media (max-width: 700px) {
+  .rocket {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin: 20px auto;
+  }
+}
   </style>
 </head>
 <body>
@@ -420,4 +443,5 @@
   </script>
 </body>
 </html>
+
 
