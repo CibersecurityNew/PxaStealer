@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="shortcut icon" href="foto-Photoroom.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Quiz interativo — PXA Stealer</title>
+  <style>
+    /* RESET BÁSICO e estilo geral */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000015 0%, #000021 100%);
+      color: #eee;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* LAPISINHOS ANIMADOS NO FUNDO GERAL */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: 
+        radial-gradient(ellipse at 10% 10%, rgba(255, 238, 138, 0.05), transparent 6%),
+        linear-gradient(180deg, #041021 0%, transparent 60%);
+      z-index: 0;
+      animation: floatPencils 8s linear infinite;
+      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><g stroke="yellow" stroke-width="2" fill="none" opacity="0.8"><path d="M100 500 L110 470 L120 500 Z"/><path d="M300 450 L310 420 L320 450 Z"/><path d="M500 550 L510 520 L520 550 Z"/></g></svg>');
+      mask-repeat: repeat;
+      mask-size: 150px 150px;
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><g stroke="yellow" stroke-width="2" fill="none" opacity="0.8"><path d="M100 500 L110 470 L120 500 Z"/><path d="M300 450 L310 420 L320 450 Z"/><path d="M500 550 L510 520 L520 550 Z"/></g></svg>');
+      -webkit-mask-repeat: repeat;
+      -webkit-mask-size: 150px 150px;
+    }
+
+    @keyframes floatPencils {
+      0% { background-position: 0 0, 0 0; }
+      50% { background-position: 0 -10px, 0 10px; }
+      100% { background-position: 0 0, 0 0; }
+    }
+
+    header {
+      width: 100vw;
+      background-color: #161b22;
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: inset 0 1px 5px #000000aa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+    .menu li a {
+      color: #8b949e;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+    }
+    .menu li a:hover,
+    .menu li a.active {
+      background-color: #237a86;
+      color: #fff;
+    }
+    main {
+      flex: 1 0 auto;
+      max-width: 960px;
+      margin: 60px auto 40px;
+      padding: 20px 30px;
+      background: rgba(10, 10, 20, 0.85);
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 200, 255, 0.4);
+      color: #eee;
+      position: relative;
+      z-index: 1;
+    }
+    h1, h2 {
+      text-shadow: 0 0 10px #00ccff;
+    }
+    footer {
+      width: 100vw;
+      background-color: #161b22;
+      color: #8b949e;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: inset 0 1px 5px #000000aa;
+      user-select: none;
+      font-size: 1.1rem;
+      z-index: 10;
+    }
+
+    /* Estilo do quiz */
+    :root{--bg:#061025;--card:#071428;--accent:#1fb6ff;--glass:rgba(255,255,255,0.04)}
+    .wrap {
+      min-height: 80vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding: 36px;
+      align-items: stretch;
+    }
+    @media(max-width:900px){.wrap{grid-template-columns:1fr;padding:18px}.right{display:none}}
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(6px);
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    .left.card {
+      display: flex;
+      flex-direction: column;
+    }
+    .right.card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    h2 {
+      margin: 0 0 12px 0;
+      font-size: 20px;
+      color: var(--accent);
+    }
+    .quiz-scroll{
+      max-height:64vh;
+      overflow:auto;
+      padding-right:8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+    }
+    .question {
+      padding: 12px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+      transition: transform .18s, box-shadow .18s;
+      width: 48%;
+      min-height: 160px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .question:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(15,40,100,0.25);
+    }
+    .question h3 {
+      margin-bottom: 8px;
+    }
+    label {
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      display: block;
+      flex-grow: 1;
+    }
+    input[type=radio] {
+      margin-right: 10px;
+    }
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    button {
+      background: linear-gradient(90deg, var(--accent), #6fe0ff);
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      color: #02222f;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(31,182,255,0.08);
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #6fe0ff, var(--accent));
+    }
+    #results {
+      margin-left: 8px;
+      font-weight: 700;
+    }
+    .right {
+      position: relative;
+      height: 80vh;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .circuit-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 10% 10%, rgba(31,182,255,0.06), transparent 6%), linear-gradient(180deg,#041021 0%, transparent 60%);
+      filter: contrast(1.05);
+      
+    }
+    .circuit-svg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.95;
+    }
+    .rocket-wrap {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -20%;
+      width: 240px;
+      height: auto;
+      max-height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .rocket {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 18px 36px rgba(31,182,255,0.14));
+      animation: rise 6s linear infinite;
+    }
+    @keyframes rise {
+      0% {transform: translateY(0) scale(1)}
+      50% {transform: translateY(-120%) scale(1.06)}
+      100% {transform: translateY(-260%) scale(1.08)}
+    }
+    .flame {
+      transform-origin: center top;
+      animation: flameFlicker .16s linear infinite;
+    }
+    @keyframes flameFlicker {
+      0% {transform: scaleY(1)}
+      50% {transform: scaleY(1.12)}
+      100% {transform: scaleY(1)}
+    }
+    .halo {
+      position: absolute;
+      left: 50%;
+      top: 70%;
+      transform: translate(-50%, -50%);
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 40%, rgba(31,182,255,0.18), rgba(31,182,255,0.06) 40%, transparent 60%);
+      filter: blur(18px);
+      opacity: 0.9;
+      animation: haloPulse 3s ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes haloPulse {
+      0% {transform: translate(-50%, -50%) scale(0.95)}
+      50% {transform: translate(-50%, -50%) scale(1.05)}
+      100% {transform: translate(-50%, -50%) scale(0.95)}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul class="menu">
+        <img src="WhatsApp Image 2025-08-12 at 21.03.51-Photoroom.png" alt="">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="saiba-mais.html">Saiba Mais</a></li>
+        <li><a href="quiz.html" class="active">Quiz</a></li>
+        <li><a href="oque-fazer.html">O que Fazer</a></li>
+        <li><a href="sobre-nos.html">Sobre Nós</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="card left">
+        <h2>Quiz — PXA Stealer</h2>
+        <div id="quiz" class="quiz-scroll"></div>
+        <div class="controls">
+          <button id="submit">Enviar</button>
+          <button id="reset">Reiniciar</button>
+          <div id="results"></div>
+        </div>
+      </div>
+      <div class="right card">
+        <div class="circuit-bg"></div>
+        <svg class="circuit-svg" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0%" stop-color="#1fb6ff" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#6fe0ff" stop-opacity="0.07"/>
+            </linearGradient>
+          </defs>
+          <path d="M40 500 H200 V420 H360 V320 H560" fill="none" stroke="url(#g1)" stroke-width="2" stroke-dasharray="12 8">
+            <animate attributeName="stroke-dashoffset" from="0" to="80" dur="6s" repeatCount="indefinite"/>
+          </path>
+        </svg>
+        <div class="halo"></div>
+        <div class="rocket-wrap">
+          <svg class="rocket" viewBox="0 0 64 128" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 0 L44 28 L32 24 L20 28 Z" fill="#ccc"/>
+            <rect x="20" y="28" width="24" height="60" rx="6" fill="#e6f7ff" stroke="#1fb6ff" stroke-width="2"/>
+            <polygon points="20,88 8,108 20,108" fill="#1fb6ff"/>
+            <polygon points="44,88 56,108 44,108" fill="#1fb6ff"/>
+            <g class="flame">
+              <path d="M32 108 Q28 120 32 128 Q36 120 32 108" fill="#ff8a4a"/>
+              <path d="M32 112 Q30 122 32 126 Q34 122 32 112" fill="#ffd07a"/>
+              
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!-- Botão Siga -->
+<div style="width: 100%; text-align: center; margin-top: 20px;">
+    <button onclick="window.location.href='oque-fazer.html'" 
+        style="background-color: #007BFF; 
+               color: white; 
+               border: none; 
+               padding: 12px 25px; 
+               font-size: 18px; 
+               border-radius: 8px; 
+               cursor: pointer; 
+               font-weight: bold; 
+               transition: background 0.3s ease;">
+        Siga
+    </button>
+</div>
+  </main>
+  
+
+  <footer>
+    <p>&copy; 2025 • Projeto Educacional sobre Segurança Cibernética</p>
+  </footer>
+
+  <script>
+    const quizData=[
+  {question:"Qual é a senha mais segura?",answers:{a:"123456",b:"Senha123",c:"Xy@9!bT7"},correct:"c"},
+  {question:"O que é phishing?",answers:{a:"Um ataque para roubar dados pessoais",b:"Um tipo de antivírus",c:"Um método de criptografia"},correct:"a"},
+  {question:"Qual dessas práticas é mais segura?",answers:{a:"Usar Wi-Fi público para acessar o banco",b:"Ativar autenticação de dois fatores",c:"Anotar senhas em um papel"},correct:"b"},
+  {question:"Qual extensão indica um site seguro?",answers:{a:"http://",b:"https://",c:"www."},correct:"b"},
+  {question:"O que é um firewall?",answers:{a:"Um antivírus",b:"Um sistema que filtra tráfego de rede",c:"Um backup automático"},correct:"b"},
+  {question:"O que o PXA Stealer pode roubar?",answers:{a:"Somente fotos",b:"Dados pessoais e senhas",c:"Somente histórico do navegador"},correct:"b"},
+  {question:"Qual é a principal forma de infecção do PXA Stealer?",answers:{a:"Downloads de arquivos maliciosos",b:"Atualizações de software legítimas",c:"Mudança automática de senha"},correct:"a"},
+  {question:"Como você deve agir ao receber um e-mail suspeito?",answers:{a:"Abrir todos os links para verificar o conteúdo",b:"Excluir o e-mail sem clicar em nenhum link",c:"Responder pedindo mais informações"},correct:"b"}
+];
+
+
+    function buildQuiz(){
+      const quizContainer=document.getElementById("quiz");
+      quizContainer.innerHTML=quizData.map((q,i)=>{
+        return `<div class='question'><h3>${i+1}. ${q.question}</h3>${Object.entries(q.answers).map(([l,t])=>`<label><input type='radio' name='question${i}' value='${l}'>${l}: ${t}</label>`).join('')}</div>`;
+      }).join('');
+    }
+
+    function showResults(){
+      const answerContainers=document.querySelectorAll(".question");
+      let score=0;
+      quizData.forEach((q,i)=>{
+        const selected=document.querySelector(`input[name=question${i}]:checked`);
+        if(selected && selected.value===q.correct){
+          score++;
+          
+          answerContainers[i].style.color="#58ff6e";
+        } else {
+          
+          answerContainers[i].style.color="#ff5858";
+        }
+      });
+      document.getElementById("results").textContent=`Você acertou ${score} de ${quizData.length}`;
+    }
+
+    function resetQuiz(){
+      document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+      document.querySelectorAll('.question').forEach(q=>q.style.color='');
+      document.getElementById("results").textContent='';
+    }
+
+    document.getElementById("submit").addEventListener("click",showResults);
+    document.getElementById("reset").addEventListener("click",resetQuiz);
+
+    buildQuiz();
+    
+    
+  </script>
+</body>
+</html>

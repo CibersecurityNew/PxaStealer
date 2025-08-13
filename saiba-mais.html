@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>PXA Stealer | Saiba Mais</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="shortcut icon" href="foto-Photoroom.png">
+  <style>
+    /* Estilo inline para o canvas (mesmo do circuito) */
+    #locks {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      display: block;
+      background: linear-gradient(135deg, #000015 0%, #000021 100%);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="locks"></canvas>
+
+  <header>
+    <nav>
+      <ul class="menu">
+        <img src="WhatsApp Image 2025-08-12 at 21.03.51-Photoroom.png" alt="">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="saiba-mais.html" class="active">Saiba Mais</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="oque-fazer.html">O que Fazer</a></li>
+        <li><a href="sobre-nos.html">Sobre Nós</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Conteúdo principal com vídeo e texto lado a lado -->
+    <section style="display: flex; gap: 30px; flex-wrap: wrap; max-width: 960px; margin: 40px auto 60px; background: rgba(10,10,20,0.85); padding: 30px; border-radius: 12px; box-shadow: 0 0 30px rgba(0,200,255,0.4); color: #eee;">
+      
+      <div style="flex: 1 1 45%; min-width: 280px; color: #c9d1d9;">
+        <h1 style="color: #58a6ff; text-shadow: 0 0 10px #00ccff;">O que é o PXA Stealer?</h1>
+        <p>O PXA Stealer é um tipo sofisticado de malware projetado para roubar informações sensíveis de computadores infectados, incluindo senhas, dados bancários, histórico de navegação e outras credenciais pessoais.</p>
+
+        <h2 style="color: #58a6ff; text-shadow: 0 0 10px #00ccff; margin-top: 30px;">Onde os Infostealers Geralmente Atuam</h2>
+        <p><strong>Distribuição global:</strong> Eles podem aparecer em qualquer lugar, atingindo especialmente países com alta atividade digital e grande número de usuários.</p>
+        <p><strong>Mercados-alvo:</strong> Frequentemente, países como Brasil, México, Estados Unidos e vários países da Europa são alvos comuns, pois têm grande volume de usuários online.</p>
+        <p><strong>Meios de disseminação:</strong> Phishing, anexos maliciosos em e-mails, sites falsos, downloads de software pirata e malwares disfarçados em aplicativos.</p>
+        <p><em>Assista ao vídeo ao lado para entender melhor o funcionamento e os riscos do PXA Stealer.</em></p>
+      </div>
+
+      <div style="flex: 1 1 50%; min-width: 320px; position: relative; padding-top: 56.25%; border-radius: 18px; box-shadow: 0 4px 15px rgba(0,200,255,0.25), inset 0 0 30px #00aaff66; background: linear-gradient(135deg, #00192e 0%, #003358 100%); overflow: hidden;">
+        <iframe 
+          src="WhatsApp Video 2025-08-09 at 14.41.17.mp4" 
+          title="Vídeo explicativo sobre PXA Stealer" 
+          allowfullscreen 
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 18px; filter: drop-shadow(0 0 5px #00c8ff99); transition: filter 0.3s ease;"
+          onmouseover="this.style.filter='drop-shadow(0 0 12px #00ffffcc)';" 
+          onmouseout="this.style.filter='drop-shadow(0 0 5px #00c8ff99)';">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- Chamada para o quiz -->
+    <section class="btn-container">
+      <h2 style="color:#58a6ff; text-shadow: 0 0 10px #00ccff; margin-bottom: 15px;">Pronto para testar seus conhecimentos?</h2>
+      <p style="color:#c9d1d9; font-size: 1.1rem; margin-bottom: 30px;">
+        Faça nosso quiz interativo e veja o quanto você sabe sobre segurança digital e o PXA Stealer!
+      </p>
+      <a href="quiz.html" class="btn-saiba-mais">Ir para o Quiz</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 • Projeto Educacional sobre Segurança Cibernética</p>
+  </footer>
+
+  <script>
+    // Código para desenhar cadeados tecnológicos animados no fundo
+    const canvas = document.getElementById('locks');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let locksArray = [];
+    const lockCount = 40;
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    class Lock {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = 20 + Math.random() * 20;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = 0.2 + Math.random() * 0.5;
+        this.phase = Math.random() * Math.PI * 2;
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.globalAlpha = this.opacity * (0.5 + 0.5 * Math.sin(this.phase));
+        ctx.strokeStyle = '#00aaff';
+        ctx.lineWidth = 2;
+        // Arco do cadeado (parte de cima)
+        ctx.beginPath();
+        ctx.arc(0, -this.size * 0.25, this.size * 0.35, Math.PI, 0, false);
+        ctx.stroke();
+        // Corpo do cadeado
+        ctx.beginPath();
+        ctx.rect(-this.size * 0.35, -this.size * 0.25, this.size * 0.7, this.size * 0.7);
+        ctx.stroke();
+        // Trava interna
+        ctx.beginPath();
+        ctx.moveTo(0, -this.size * 0.1);
+        ctx.lineTo(0, this.size * 0.25);
+        ctx.stroke();
+        ctx.restore();
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.phase += 0.02;
+        if (this.x < -this.size) this.x = width + this.size;
+        if (this.x > width + this.size) this.x = -this.size;
+        if (this.y < -this.size) this.y = height + this.size;
+        if (this.y > height + this.size) this.y = -this.size;
+      }
+    }
+
+    function init() {
+      locksArray = [];
+      for (let i = 0; i < lockCount; i++) {
+        locksArray.push(new Lock());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let lock of locksArray) {
+        lock.update();
+        lock.draw();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      resize();
+      init();
+    });
+
+    resize();
+    init();
+    animate();
+  </script>
+
+  <!-- VLibras -->
+  <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+      </div>
+  </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+      new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  <!-- Fim VLibras -->
+
+</body>
+</html>

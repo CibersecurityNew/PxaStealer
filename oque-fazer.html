@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>PXA Stealer | O que Fazer</title>
+  <link rel="stylesheet" href="style.css" />
+<link rel="shortcut icon" href="foto-Photoroom.png">
+  <style>
+    /* Fundo canvas com "?" */
+    #questions {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(135deg, #000015 0%, #000021 100%);
+      overflow: hidden;
+    }
+
+    /* Container principal */
+    main {
+      max-width: 960px;
+      margin: 40px auto 60px;
+      background: rgba(10,10,20,0.85);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0,200,255,0.4);
+      color: #a8c0ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      
+    }
+
+    h1, h2 {
+      color: #6cb0ff;
+      text-shadow: 0 0 8px #58a6ff;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 40px;
+      margin-bottom: 25px;
+    }
+
+    /* Estilo para métodos */
+    .method {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 35px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .method-text {
+      flex: 1 1 60%;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #c3d0ff;
+    }
+
+    .method-image {
+      flex: 1 1 35%;
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 15px;
+      background: #003358;
+      box-shadow: 0 0 20px #00aaff88;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .method-image img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px #00c8ff99);
+    }
+
+    /* Seção suporte */
+    .support-section {
+      margin-top: 60px;
+      color: #c3d0ff;
+    }
+    .support-section h2 {
+      color: #58a6ff;
+      margin-bottom: 20px;
+    }
+    .support-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .support-icon {
+      font-size: 1.8rem;
+      color: #ff8c00;
+      flex-shrink: 0;
+    }
+    .support-text {
+      flex: 1;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #b0c8ff;
+    }
+    .support-text strong {
+      color: #a0cfff;
+    }
+    .support-links a {
+      color: #00bfff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .support-links a:hover {
+      color: #007bbf;
+      text-decoration: underline;
+    }
+
+    /* BOTÃO VENHA NOS CONHECER - ESTILO IGUAL AO SITE INÍCIO */
+  .btn-saiba-mais {
+  background-color: #237a86;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(35, 122, 134, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn-saiba-mais:hover {
+  background-color: #1a5961;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(35, 122, 134, 0.8);
+}
+
+    /* RODAPÉ - ESTILO IGUAL AO SITE INÍCIO */
+    footer {
+      width: 100vw;
+      background-color: #161b22;
+      color: #8b949e;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: inset 0 1px 5px #000000aa;
+      user-select: none;
+      font-size: 1.1rem;
+      font-weight: 400;
+      z-index: 10;
+    }
+
+    /* Responsividade */
+    @media (max-width: 700px) {
+      .method {
+        flex-direction: column;
+      }
+      .method-text, .method-image {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+      main {
+        margin: 20px 15px 40px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="questions"></canvas>
+
+  <header>
+    <nav>
+      <ul class="menu">
+        <img src="WhatsApp Image 2025-08-12 at 21.03.51-Photoroom.png" alt="">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="saiba-mais.html">Saiba Mais</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="oque-fazer.html" class="active">O que Fazer</a></li>
+        <li><a href="sobre-nos.html">Sobre Nós</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>O que Fazer se Você For Vítima do PXA Stealer</h1>
+
+    <!-- Métodos -->
+
+    <section class="method">
+      <div class="method-text">
+        <h2>Passos Imediatos</h2>
+        <ul>
+          <li>Desconecte o dispositivo da internet para impedir o roubo contínuo de dados.</li>
+          <li>Utilize outro dispositivo seguro para alterar todas as suas senhas importantes.</li>
+          <li>Ative a autenticação de dois fatores (2FA) em todas as contas sensíveis.</li>
+          <li>Execute uma varredura completa com antivírus e antimalware confiáveis para remover ameaças.</li>
+        </ul>
+      </div>
+      <div class="method-image">
+        <img src="WhatsApp Image 2025-08-12 at 20.30.02.jpeg" alt="Ilustração Passos Imediatos" />
+      </div>
+    </section>
+
+    <section class="method">
+      <div class="method-image">
+        <img src="passosimediatos.webp" alt="Ilustração Proteção e Recuperação" />
+      </div>
+      <div class="method-text">
+        <h2>Medidas de Proteção e Recuperação</h2>
+        <ul>
+          <li>Denuncie o incidente para a polícia especializada em crimes cibernéticos.</li>
+          <li>Monitore suas contas bancárias e cartões de crédito para identificar atividades suspeitas.</li>
+          <li>Considere o bloqueio temporário de cartões e alteração de informações financeiras.</li>
+          <li>Atualize seu sistema operacional e todos os softwares para as versões mais recentes.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="method">
+      <div class="method-text">
+        <h2>Educação e Prevenção</h2>
+        <ul>
+          <li>Informe-se sobre os métodos comuns de ataque e como evitá-los.</li>
+          <li>Evite clicar em links ou abrir anexos de remetentes desconhecidos.</li>
+          <li>Utilize senhas fortes e únicas para cada serviço.</li>
+          <li>Realize backups regulares dos seus dados importantes em locais seguros.</li>
+        </ul>
+      </div>
+      <div class="method-image">
+        <img src="educacao.jpg" alt="Ilustração Educação e Prevenção" />
+      </div>
+    </section>
+
+    <!-- Seção suporte detalhada -->
+
+    <section class="support-section">
+      <h2> Suporte abrangente contra ataques cibernéticos.</h2>
+
+      <div class="support-item">
+        <div class="support-icon">📲</div>
+        <div class="support-text">
+          <strong>Linhas diretas de emergência cibernética 24hrs:</strong><br>
+          Brasil: +55 11 91086 1380<br>
+          Portugal: +351 (21) 1230932
+        </div>
+      </div>
+
+      <div class="support-item">
+        <div class="support-icon">🛡️</div>
+        <div class="support-text">
+          Obtenha proteção cibernética de baixa latência em minutos.<br>
+          A Cloudflare pode protegê-lo contra ataques DDoS, de ransomware, de identidade ou acesso, de rede, de web e de aplicativos.
+        </div>
+      </div>
+
+      <div class="support-item">
+        <div class="support-icon">🔏</div>
+        <div class="support-text">
+          Proteção contra ataques DDoS, de sites, de aplicativos, de força de trabalho e de infraestrutura.<br>
+          DDoS + WAF + CDN e outras funções de segurança e performance incorporadas à mesma Rede global.<br>
+          Implantação desses serviços medida em minutos e horas, não semanas ou meses.
+        </div>
+      </div>
+
+      <div class="support-item">
+        <div class="support-icon">✅</div>
+        <div class="support-text">
+          Segurança Zero Trust.<br>
+          Mantenha as ameaças conhecidas e desconhecidas longe de seus aplicativos, dispositivos de usuário, rede e contas de e-mail.<br>
+          A inteligência contra ameaças para ransomware, phishing e muito mais é derivada de mais de 1 trilhão de solicitações de DNS diárias e do rastreamento preventivo da internet em busca de ataques emergentes.
+        </div>
+      </div>
+
+      <div class="support-item">
+        <div class="support-icon">🌐</div>
+        <div class="support-text">
+          Maior rede global de data centers de mitigação de DDoS.<br>
+          A rede da Cloudflare tem mais de 330 data centers em todo o mundo.<br>
+          Isso é cinco vezes mais do que os principais concorrentes.<br>
+          Bloqueie ataques DDoS de qualquer tamanho e tipo.
+        </div>
+      </div>
+    </section>
+
+    
+    <div class="btn-container">
+  <a href="sobre-nos.html" class="btn-saiba-mais">Venha nos Conhecer</a>
+</div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 • Projeto Educacional sobre Segurança Cibernética</p>
+  </footer>
+
+  <script>
+    // Fundo animado com interrogações "?"
+    const canvas = document.getElementById('questions');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const questionCount = 40;
+    let questionsArray = [];
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    class QuestionMark {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = 20 + Math.random() * 30;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.opacity = 0.1 + Math.random() * 0.4;
+        this.phase = Math.random() * Math.PI * 2;
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.globalAlpha = this.opacity * (0.5 + 0.5 * Math.sin(this.phase));
+        ctx.fillStyle = '#00aaff';
+        ctx.font = `${this.size}px Arial Black, Arial, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('?', 0, 0);
+        ctx.restore();
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.phase += 0.03;
+        if (this.x < -this.size) this.x = width + this.size;
+        if (this.x > width + this.size) this.x = -this.size;
+        if (this.y < -this.size) this.y = height + this.size;
+        if (this.y > height + this.size) this.y = -this.size;
+      }
+    }
+
+    function init() {
+      questionsArray = [];
+      for (let i = 0; i < questionCount; i++) {
+        questionsArray.push(new QuestionMark());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let q of questionsArray) {
+        q.update();
+        q.draw();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      resize();
+      init();
+    });
+
+    resize();
+    init();
+    animate();
+  </script>
+
+</body>
+</html>
+

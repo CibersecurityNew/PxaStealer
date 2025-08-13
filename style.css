@@ -1,0 +1,227 @@
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HTML E BODY - para layout flex e altura total */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* BODY */
+body {
+  flex: 1 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #000015 0%, #000021 100%);
+  color: #eee;
+  overflow-x: hidden;
+}
+
+/* FUNDO DO CIRCUITO */
+#circuit {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  display: block;
+  background: linear-gradient(135deg, #000015 0%, #000021 100%);
+}
+
+/* HEADER E MENU - igual largura do footer (100vw) e estilo */
+header {
+  width: 100vw; /* largura total da viewport */
+  background-color: #161b22; /* mesma cor do footer */
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: inset 0 1px 5px #000000aa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu img{
+  margin-right: 200px ;
+  height: 50px;
+  width: 100px;
+  margin-left: -300px;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.menu li a {
+  color: #8b949e;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.menu li a:hover,
+.menu li a.active {
+  background-color: #237a86;
+  color: #fff;
+}
+
+/* CONTEÚDO PRINCIPAL */
+main {
+  flex: 1 0 auto;
+  max-width: 960px;
+  margin: 60px auto 40px; /* margem inferior para espaçar do rodapé */
+  padding: 20px 30px;
+  background: rgba(10, 10, 20, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0, 200, 255, 0.4);
+  color: #eee;
+}
+
+h1, h2 {
+  text-shadow: 0 0 10px #00ccff;
+}
+
+/* INTRODUÇÃO */
+.introducao {
+  background-color: transparent;
+  color: #c9d1d9;
+  padding-bottom: 20px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.introducao h2 {
+  color: #58a6ff;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.introducao p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* CAIXAS DE INFORMAÇÃO */
+.caixas-info {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px 0;
+  max-width: 1100px;
+  margin: 0 auto 50px;
+}
+
+.caixa {
+  background-color: #161b22;
+  padding: 30px;
+  border-radius: 20px;
+  width: 300px;
+  box-shadow: 0 0 15px rgba(88, 166, 255, 0.4);
+  animation: pulse 2.5s infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.caixa:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 0 30px rgba(88, 166, 255, 0.9);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.6);
+  }
+}
+
+.caixa h2 {
+  font-size: 1.3rem;
+  color: #58a6ff;
+  margin-bottom: 12px;
+}
+
+.caixa p {
+  font-size: 1rem;
+  color: #c9d1d9;
+  line-height: 1.6;
+}
+
+/* BOTÃO SAIBA MAIS */
+.btn-container {
+  text-align: center;
+  margin: 40px 0 60px;
+}
+
+.btn-saiba-mais {
+  display: inline-block;
+  background-color: #237a86;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 0 10px rgba(35, 122, 134, 0.5);
+  cursor: pointer;
+}
+
+.btn-saiba-mais:hover {
+  background-color: #1a5961;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(35, 122, 134, 0.8);
+}
+
+/* RODAPÉ */
+footer {
+  width: 100vw; /* largura total igual ao header */
+  background-color: #161b22;
+  color: #8b949e;
+  text-align: center;
+  padding: 20px 0;
+  box-shadow: inset 0 1px 5px #000000aa;
+  user-select: none;
+  font-size: 1.1rem;
+  z-index: 10;
+  /* sem position fixed ou absolute */
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 700px) {
+  .caixas-info {
+    flex-direction: column;
+    align-items: center;
+  }
+  .caixa {
+    width: 90%;
+    max-width: 320px;
+  }
+  main {
+    margin: 40px 15px 60px;
+    padding: 20px 15px;
+  }
+}

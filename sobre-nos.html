@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+ <link rel="shortcut icon" href="foto-Photoroom.png">
+ <link rel="stylesheet" href="style.css">
+  <title>PXA Stealer | Sobre Nós</title>
+  <style>
+    /* RESET BÁSICO */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* HTML E BODY para scroll e fundo */
+    html {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    body {
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+      overflow: visible;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000015 0%, #000021 100%);
+      color: #eee;
+    }
+
+    /* canvas de fundo fixo */
+    #background-circuit {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: linear-gradient(135deg, #000015 0%, #000021 100%);
+    }
+
+    /* HEADER E MENU */
+    header {
+      width: 100vw;
+      background-color: #161b22;
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: inset 0 1px 5px #000000aa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .menu li a {
+      color: #8b949e;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+    }
+
+    .menu li a:hover,
+    .menu li a.active {
+      background-color: #237a86;
+      color: #fff;
+    }
+
+    /* CONTEÚDO PRINCIPAL */
+    main {
+      flex-grow: 1;
+      max-width: 960px;
+      margin: 60px auto 40px;
+      padding: 20px 30px;
+      background: rgba(10, 10, 20, 0.85);
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 200, 255, 0.4);
+      color: #eee;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1, h2 {
+      text-shadow: 0 0 10px #00ccff;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    p, ul {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #c3d0ff;
+    }
+
+    /* Objetivo do projeto */
+    .objetivo {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #9fc7ff;
+    }
+
+    /* Equipe */
+    .equipe-item {
+      margin-bottom: 18px;
+      color: #c3d0ff;
+    }
+    .equipe-item strong {
+      color: #6cb0ff;
+    }
+
+    /* Mensagem final */
+    .final-message {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 40px 0 20px;
+      color: #80bfff;
+    }
+
+    /* Jogo da memória */
+    .memory-game {
+      max-width: 480px;
+      margin: 0 auto 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      perspective: 1000px;
+    }
+    .memory-card {
+      width: 100%;
+      padding-top: 100%;
+      position: relative;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 0 8px #237a86;
+      background-color: #0a1a2a;
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+    }
+    .memory-card.flip {
+      transform: rotateY(180deg);
+      box-shadow: 0 0 16px #58a6ff;
+    }
+    .memory-card.matched {
+      cursor: default;
+      box-shadow: 0 0 20px #00ffcc;
+    }
+    .memory-card .front,
+    .memory-card .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      backface-visibility: hidden;
+      top: 0; left: 0;
+      user-select: none;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+    .memory-card .front {
+      background-color: #237a86;
+      color: #fff;
+      pointer-events: none;
+    }
+    .memory-card .back {
+      background-color: #0a1a2a;
+      transform: rotateY(180deg);
+      font-size: 3rem;
+      pointer-events: none;
+    }
+
+    /* Botão voltar ao início */
+    .btn-voltar {
+      display: block;
+      max-width: 200px;
+      margin: 0 auto 60px;
+      background-color: #237a86;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1rem;
+      text-align: center;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 0 10px rgba(35, 122, 134, 0.5);
+      cursor: pointer;
+    }
+
+    .btn-voltar:hover {
+      background-color: #1a5961;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(35, 122, 134, 0.8);
+    }
+
+    /* Mensagem de final de jogo */
+    .congrats-message {
+      max-width: 480px;
+      margin: 0 auto 30px;
+      padding: 15px;
+      background-color: #237a86;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+      font-size: 1.3rem;
+      box-shadow: 0 0 20px #00ffff;
+      user-select: none;
+      display: none;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* RODAPÉ */
+     footer {
+      width: 100vw;
+      background-color: #161b22;
+      color: #8b949e;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: inset 0 1px 5px #000000aa;
+      user-select: none;
+      font-size: 1.1rem;
+      z-index: 10;
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 700px) {
+      main {
+        margin: 40px 15px 60px;
+        padding: 20px 15px;
+      }
+      .memory-game {
+        max-width: 90vw;
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="background-circuit"></canvas>
+
+  <header>
+    <nav>
+      <ul class="menu">
+        <img src="WhatsApp Image 2025-08-12 at 21.03.51-Photoroom.png" alt="">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="saiba-mais.html">Saiba Mais</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="oque-fazer.html">O que Fazer</a></li>
+        <li><a href="sobre-nos.html" class="active">Sobre Nós</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>📊 Equipe e Contribuições do Projeto</h1>
+
+    <p class="objetivo">
+      <strong>Objetivo do Projeto:</strong> Criamos este projeto para informar sobre o novo malware que iniciou em 2024, o <em>PXA Stealer</em>. Nosso intuito é conscientizar, educar e proteger os usuários contra essa ameaça digital crescente.
+    </p>
+
+    <div class="equipe-item">
+      <strong>Miriã — Desenvolvedora Front-end, Web Designer e Coordenadora Criativa do Site.</strong> Responsável por toda a concepção visual, desenvolvimento do front-end, implementação de funcionalidades, organização geral e coordenação criativa de todas as etapas do projeto.
+    </div>
+
+    <div class="equipe-item">
+      <strong>Igor — Gerente de Projeto e Desenvolvedor JavaScript.</strong> Responsável pela liderança na elaboração e organização da documentação do site, garantindo clareza, além de supervisionar o andamento das etapas de desenvolvimento.
+    </div>
+
+    <div class="equipe-item">
+      <strong>Lucas — Gerente de Projeto.</strong> Contribuiu de forma decisiva na formalização e detalhamento técnico da documentação, colaborando para o alinhamento dos objetivos do projeto e a eficiência na comunicação entre as equipes.
+    </div>
+
+    <div class="equipe-item">
+      <strong>Cardoso — Desenvolvedor Front-end.</strong> Colaborou com ideias criativas e foi responsável, junto com a equipe, pela idealização do jogo interativo presente no site e no vídeo informativo.
+    </div>
+
+    <div class="equipe-item">
+      <strong>Francimar — Desenvolvedor JavaScript.</strong> Foi responsável pela elaboração das perguntas e pela estrutura lógica do quiz interativo, garantindo uma experiência didática e envolvente para os usuários.
+    </div>
+
+    <div class="equipe-item">
+      <strong>Asafe — Pesquisador e Criador de Conteúdo.</strong> Produziu o vídeo informativo disponível na página "Saiba Mais", enriquecendo a experiência do usuário e contribuindo com ideias para o projeto.
+    </div>
+
+    <div class="equipe-item">
+      <strong>Maria — Pesquisadora e Criadora de Conteúdo.</strong> Realizou pesquisas aprofundadas sobre o tema e contribuiu com ideias para o desenvolvimento.
+    </div>
+
+    <p class="final-message">
+      Bom, chegamos ao final! Espero que tenha aprendido muito no nosso site. Para nos despedirmos, criamos um jogo  da memória tecnológico para você se entreter:
+    </p>
+
+    <section class="memory-game" id="memory-game">
+      <!-- Cartas do jogo via JS -->
+    </section>
+
+    <div class="congrats-message" id="congrats-message">
+      🎉 Parabéns! Você completou o jogo! 🎉
+    </div>
+
+    <a href="index.html" class="btn-voltar">Voltar ao Início</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 • Projeto Educacional sobre Segurança Cibernética</p>
+  </footer>
+
+  <script>
+    // Jogo da memória com som e animações
+    const cardsArray = [
+      { name: 'chip', emoji: '💻' },
+      { name: 'cpu', emoji: '🛜' },
+      { name: 'network', emoji: '🌐' },
+      { name: 'robot', emoji: '🤖' },
+      { name: 'server', emoji: '📧' },
+      { name: 'usb', emoji: '🔌' },
+      { name: 'wifi', emoji: '🚀' },
+      { name: 'security', emoji: '📡' },
+    ];
+
+    const gameGrid = cardsArray.concat(cardsArray).sort(() => 0.5 - Math.random());
+    const game = document.getElementById('memory-game');
+    const congratsMessage = document.getElementById('congrats-message');
+
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let matches = 0;
+
+    const flipSound = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+
+    function createCard(card) {
+      const cardElement = document.createElement('div');
+      cardElement.classList.add('memory-card');
+      cardElement.dataset.name = card.name;
+
+      const front = document.createElement('div');
+      front.classList.add('front');
+      front.textContent = '❔';
+
+      const back = document.createElement('div');
+      back.classList.add('back');
+      back.textContent = card.emoji;
+
+      cardElement.appendChild(front);
+      cardElement.appendChild(back);
+
+      cardElement.addEventListener('click', () => {
+        if(lockBoard || cardElement === firstCard || cardElement.classList.contains('flip') || cardElement.classList.contains('matched')) return;
+
+        flipSound.currentTime = 0;
+        flipSound.play();
+
+        cardElement.classList.add('flip');
+
+        if (!firstCard) {
+          firstCard = cardElement;
+          return;
+        }
+        secondCard = cardElement;
+        lockBoard = true;
+
+        if (firstCard.dataset.name === secondCard.dataset.name) {
+          matches++;
+          firstCard.classList.add('matched');
+          secondCard.classList.add('matched');
+          resetBoard();
+          if(matches === cardsArray.length) {
+            congratsMessage.style.display = 'block';
+          }
+        } else {
+          setTimeout(() => {
+            firstCard.classList.remove('flip');
+            secondCard.classList.remove('flip');
+            resetBoard();
+          }, 1000);
+        }
+      });
+
+      return cardElement;
+    }
+
+    function resetBoard() {
+      [firstCard, secondCard] = [null, null];
+      lockBoard = false;
+    }
+
+    function setupGame() {
+      gameGrid.forEach(card => {
+        const cardElement = createCard(card);
+        game.appendChild(cardElement);
+      });
+    }
+
+    setupGame();
+
+    // Fundo circuito tecnológico interativo aprimorado
+    (() => {
+      const canvas = document.getElementById('background-circuit');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+
+      const pointCount = 150;
+      const maxDistance = 160;
+      const velocityRange = 0.5;
+
+      const points = [];
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * window.devicePixelRatio;
+        canvas.height = height * window.devicePixelRatio;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      }
+
+      class Point {
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * velocityRange;
+          this.vy = (Math.random() - 0.5) * velocityRange;
+          this.radius = 1 + Math.random() * 2;
+          this.baseAlpha = 0.25 + Math.random() * 0.25;
+          this.alpha = this.baseAlpha;
+          this.alphaDirection = Math.random() > 0.5 ? 1 : -1;
+        }
+        move() {
+          this.x += this.vx;
+          this.y += this.vy;
+
+          if (this.x < 0 || this.x > width) this.vx = -this.vx;
+          if (this.y < 0 || this.y > height) this.vy = -this.vy;
+
+          this.alpha += 0.005 * this.alphaDirection;
+          if (this.alpha > this.baseAlpha + 0.15) this.alphaDirection = -1;
+          if (this.alpha < this.baseAlpha - 0.15) this.alphaDirection = 1;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0, 200, 255, ${this.alpha.toFixed(2)})`;
+          ctx.shadowColor = 'rgba(0, 200, 255, 0.7)';
+          ctx.shadowBlur = 4;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      function connectPoints() {
+        for(let i=0; i<points.length; i++) {
+          for(let j=i+1; j<points.length; j++) {
+            const p1 = points[i];
+            const p2 = points[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < maxDistance) {
+              const lineAlpha = ((maxDistance - dist) / maxDistance) * 0.25;
+              ctx.strokeStyle = `rgba(0, 200, 255, ${lineAlpha.toFixed(2)})`;
+              ctx.lineWidth = 1;
+              ctx.shadowColor = 'rgba(0, 200, 255, 0.7)';
+              ctx.shadowBlur = 4;
+              ctx.beginPath();
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+              ctx.shadowBlur = 0;
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        points.forEach(p => {
+          p.move();
+          p.draw();
+        });
+        connectPoints();
+        requestAnimationFrame(animate);
+      }
+
+      function init() {
+        resize();
+        points.length = 0;
+        for(let i=0; i<pointCount; i++) {
+          points.push(new Point());
+        }
+        animate();
+      }
+
+      window.addEventListener('resize', init);
+      init();
+    })();
+  </script>
+
+</body>
+</html>
