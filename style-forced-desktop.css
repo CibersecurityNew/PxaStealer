@@ -1,0 +1,39 @@
+/* Força o layout sempre como desktop, em qualquer largura de tela! */
+
+.wrap <link rel="stylesheet" href="style-forced-desktop.css">
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 24px !important;
+}
+
+.menu {
+  flex-direction: row !important;
+  gap: 25px !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.question {
+  width: 48% !important;
+}
+
+.quiz-scroll {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  max-height: 60vh !important;
+}
+
+.rocket-wrap {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: -20% !important;
+  width: 240px !important;
+}
+
+.right {
+  position: relative !important;
+  height: 80vh !important;
+  min-height: unset !important;
+}
